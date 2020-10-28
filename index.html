@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dice</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: #6495ed2b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inner {
+            display: flex;
+        }
+
+        p {
+            background: #ffffff;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 0 0 3px #000000;
+            font-weight: bold;
+            transition: .3s ease-in-out;
+            font-size: 25px;
+        }
+
+        button {
+            background: dodgerblue;
+            color: #ffffff;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        button:active {
+            animation: click .5s ease-in-out forwards;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        @keyframes click {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(.8);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        small {
+            text-align: center;
+            display: block;
+        }
+
+        .info {
+            background: cornflowerblue;
+            color: #ffffff;
+            padding: 5px 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity .1s ease-in-out;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info">You have a draw</div>
+        <div class="inner">
+            <div class="dice">
+                <small>Dice One</small>
+                <p class="dice_one">0</p>
+            </div>
+            <div class="dice">
+                <small>Dice Two</small>
+                <p class="dice_two">0</p>
+            </div>
+        </div>
+        <button>Roll</button>
+    </div>
+</body>
+
+<script>
+    const dice_one = document.querySelector('.dice_one');
+    const dice_two = document.querySelector('.dice_two');
+    const button = document.querySelector('button');
+    const info = document.querySelector('.info');
+
+    const roll_dice = () => {
+        return Math.floor((Math.random() * 6) + 1);
+    }
+
+    const show_info = () => {
+        if (parseInt(dice_one.textContent) === parseInt(dice_two.textContent)) {
+            info.style.opacity = '1';
+        } else {
+            info.style.opacity = '0';
+        }
+    }
+
+    const hide_show = el => {
+        el.style.opacity = '0';
+        setTimeout(() => {
+            el.style.opacity = '1';
+            el.textContent = roll_dice()
+            show_info();
+        }, 200);
+    }
+
+
+
+    button.addEventListener('click', () => {
+        hide_show(dice_one);
+        hide_show(dice_two);
+    });
+
+</script>
+
+</html>
